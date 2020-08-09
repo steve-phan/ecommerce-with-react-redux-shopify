@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+html {
+    font-size: 10px;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body,
+#root,
+.App,
+.fullheight {
+    height: 100%;
+
+
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400; // default font-size
+    line-height: 1; // 1 it mean no line-height
+}
+
+a {
+    text-decoration: none;
+
+}
+
+a,
+a:hover {
+    transition: all .4 ease-in-out;
+}
+
+.main {
+    width: 100%;
+    height: calc(100% - 6.5rem - 5.8rem);
+    max-width: 1450px;
+    padding: 0;
+    margin: 0 auto;
+}
