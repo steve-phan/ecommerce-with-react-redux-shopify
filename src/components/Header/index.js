@@ -1,15 +1,25 @@
 // rfec Snipet
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { signOutUserStart } from "./../../redux/User/user.actions";
 
-import {auth } from '../firebase/utils' 
+import { Link } from "react-router-dom";
 
 import "./styles.scss";
 import logo from "./../../assets/react-hook.png";
 
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+  signUpSuccess: user.signUpSuccess,
+});
+
 const Header = (props) => {
-  const { currentUser } = props;
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector(mapState);
+  const signOut = () => {
+    dispatch(signOutUserStart());
+  };
   return (
     <header className="header">
       <div className="wrap">
@@ -18,17 +28,22 @@ const Header = (props) => {
             <img src={logo} alt="Just a logo" />
           </Link>
         </div>
+        <button onClick={signOut}>logout</button>
         <div className="callToActions">
           {currentUser && (
             <ul>
               <li>
-                <span onClick={() => auth.signOut() } >LogOut</span>
+                <Link to="/dashboard">My Account</Link>
+              </li>
+              <li>
+                <span onClick={signOut}>LogOut</span>
               </li>
             </ul>
           )}
 
           {!currentUser && (
             <ul>
+  
               <li>
                 <Link to="/signup">Registation</Link>
               </li>
