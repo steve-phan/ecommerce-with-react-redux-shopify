@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import "./styles.scss";
 import logo from "./../../assets/react-hook.png";
 
+import {auth} from './../firebase/utils'
+
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
   signUpSuccess: user.signUpSuccess,
@@ -18,6 +20,7 @@ const Header = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector(mapState);
   const signOut = () => {
+    auth.signOut();
     dispatch(signOutUserStart());
   };
   return (
