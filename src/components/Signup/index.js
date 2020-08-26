@@ -32,11 +32,15 @@ const Signup = (props) => {
       reset();
       history.push("/");
     }
+    
   }, [currentUser, history]);
 
   useEffect(() => {
     if (Array.isArray(userErr) && userErr.length > 0) {
       setErrors(userErr);
+    }
+    return () => {
+      setErrors('')
     }
   }, [userErr]);
 

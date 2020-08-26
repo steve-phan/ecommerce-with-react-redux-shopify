@@ -32,6 +32,9 @@ const EmailPassword = (props) => {
     if (Array.isArray(userErr) && userErr.length > 0) {
       setErrors(userErr);
     }
+    return () => {
+      setErrors('')
+    }
   }, [userErr]);
 
   const handleSubmit = (e) => {

@@ -47,10 +47,10 @@ export default firebase
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) =>{
     const unsubscribe = auth.onAuthStateChanged( userAuth => {
+      console.log(auth.currentUser)
       unsubscribe()
       resolve(userAuth)
     }, reject)
   })
-
 
 }

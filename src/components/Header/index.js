@@ -28,7 +28,6 @@ const Header = (props) => {
             <img src={logo} alt="Just a logo" />
           </Link>
         </div>
-        <button onClick={signOut}>logout</button>
         <div className="callToActions">
           {currentUser && (
             <ul>

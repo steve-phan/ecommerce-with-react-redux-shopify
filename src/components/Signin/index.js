@@ -15,24 +15,38 @@ import { Link, useHistory } from "react-router-dom";
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
+  userErr: user.userErr,
 });
 
 const SignIn = (props) => {
-  const { currentUser } = useSelector(mapState);
+  const { userErr, currentUser } = useSelector(mapState);
 
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory()
-  console.log('clicking')
+  const [errors, setErrors] = useState('');
 
+  const history = useHistory();
+ 
   useEffect(() => {
     if (currentUser) {
       resetForm();
       // Need import withRouter from react-router-dom to access history
       history.push("/");
     }
-  }, [currentUser,history]);
+  }, [currentUser, history]);
+ 
+  useEffect(() => {
+    console.log(userErr)
+
+    // if (Array.isArray(userErr) && userErr.length > 0) {
+    //   setErrors(userErr);
+    // }
+    return () => {
+      setErrors('')
+    }
+  }, [userErr]);
+
   const resetForm = () => {
     setEmail("");
     setPassword("");
@@ -53,6 +67,14 @@ const SignIn = (props) => {
   return (
     <AuthWrapper {...configAuthWrapper}>
       <div className="fromWrap">
+        {errors.length > 0 && (
+          <ul>
+            {errors.map((err, index) => {
+              // if(err !== 'Email not found.. try again' && err !== 'auth/email-already-in-use')
+              return <li key={index}>{err}</li>;
+            })}
+          </ul>
+        )}
         {/* Just submit form do something */}
         <form onSubmit={handleSubmit}>
           <FormInput
@@ -84,7 +106,6 @@ const SignIn = (props) => {
     </AuthWrapper>
   );
 };
-
 export default SignIn;
 
 {

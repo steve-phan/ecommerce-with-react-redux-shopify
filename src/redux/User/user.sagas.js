@@ -31,21 +31,34 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
       })
     );
   } catch (error) {
-    console.log(error);
+    // yield put(userError('errr'))
+    console.log('looi quasdfa');
   }
 }
 
 export function* emailSignIn({ payload: { email, password } }) {
   try {
-    const { user } = yield auth.signInWithEmailAndPassword(email, password);
-    yield getSnapshotFromUserAuth(user);
+    const { user } = yield auth.signInWithEmailAndPassword(email, password)
+    // .then(user => 
+      console.log('success login')
+    // )
+    // .catch(err => {
 
+    // })
+    
+    yield getSnapshotFromUserAuth(user);
+  
     // dispatch({
     //   type: userTypes.SIGN_IN_SUCCESS,
     //   payload: true,
     // });
   } catch (err) {
-    console.log(err);
+    
+    yield put(userError([err.code]));
+
+
+    // const loginError = err.code
+    // yield put(userError('error'))
   }
 }
 
@@ -55,8 +68,9 @@ export function* onEmailSignInStart() {
 
 export function* isUserAuthenticated() {
   try {
-    console.log(userAuth + '  is checking')
+    
     const userAuth = yield getCurrentUser();
+    console.log(userAuth + '  is checking')
     if (!userAuth) return;
     yield getSnapshotFromUserAuth(userAuth);
   } catch (error) {
@@ -85,7 +99,6 @@ export function* signUpUser({
 }) {
   if (password !== confirmPassword) {
     const err = ["password don't match"];
-
     yield put(userError(err));
     return;
   }
@@ -96,7 +109,7 @@ export function* signUpUser({
     yield getSnapshotFromUserAuth(user, additionalData);
  
   } catch (err) {
-    console.log(err);
+    yield put(userError([err.code]))
   }
 }
 
@@ -109,6 +122,7 @@ export function* resetPassword({ payload: { email } }) {
     yield call(handleResetPasswordAPI, email);
     yield put(resetPasswordSuccess());
   } catch (err) {
+    console.log(`hello ${err}`)
     yield put(userError(err));
   }
 }
